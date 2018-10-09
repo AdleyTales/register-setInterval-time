@@ -1,2 +1,61 @@
 # register-setInterval-time
 移动端发送验证码倒计时手机锁屏后，重新打开，会休眠js中的setInterval 【解决】
+
+#### 代码如下
+```js
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        button {
+            border: 1px solid brown;
+            margin: 100px;
+            width: 120px;
+            height: 44px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button id="btn">发送验证码</button>
+    </div>
+
+    <script>
+        var Btn = document.querySelector('#btn');
+        Btn.onclick = function () {
+            beginCountDown(30);
+        }
+
+        // 
+        function beginCountDown(cd) {
+            //倒计时
+            var num = cd;
+            var t1 = parseInt(new Date().getTime() / 1000);
+            var btn_countDown = setInterval(
+                function () {
+                    var t2 = parseInt(new Date().getTime() / 1000);
+                    var t_time = (t2 - t1);
+                    if (t_time <= num) {
+                        // return $('.timeout').html(num - t_time +'秒');
+                        Btn.innerHTML = num - t_time + '秒';
+                    } else {
+                        clearInterval(btn_countDown);
+                        Btn.innerHTML = '重新发送';
+                    }
+                }, 1000);
+        }
+
+
+
+    </script>
+</body>
+
+</html>
+
+```
